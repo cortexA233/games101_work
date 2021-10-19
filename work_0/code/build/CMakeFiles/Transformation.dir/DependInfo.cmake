@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "E:/games101/work_0/Assignment_0/code/main.cpp" "CMakeFiles/Transformation.dir/main.cpp.obj" "gcc" "CMakeFiles/Transformation.dir/main.cpp.obj.d"
+  "E:/games101/works_repo/games101_work/work_0/code/main.cpp" "CMakeFiles/Transformation.dir/main.cpp.obj" "gcc" "CMakeFiles/Transformation.dir/main.cpp.obj.d"
   )
 
 # Targets to which this target links.

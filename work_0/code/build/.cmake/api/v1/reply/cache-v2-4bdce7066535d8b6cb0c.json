@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "e:/games101/work_0/Assignment_0/code/build"
+			"value" : "e:/games101/works_repo/games101_work/work_0/code/build"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -155,10 +155,10 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
+					"value" : "CXX compiler"
 				}
 			],
-			"type" : "FILEPATH",
+			"type" : "STRING",
 			"value" : "E:/mingw64/bin/x86_64-w64-mingw32-g++.exe"
 		},
 		{
@@ -299,10 +299,10 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
+					"value" : "C compiler"
 				}
 			],
-			"type" : "FILEPATH",
+			"type" : "STRING",
 			"value" : "E:/mingw64/bin/x86_64-w64-mingw32-gcc.exe"
 		},
 		{
@@ -563,7 +563,7 @@
 				}
 			],
 			"type" : "BOOL",
-			"value" : "TRUE"
+			"value" : "ON"
 		},
 		{
 			"name" : "CMAKE_EXTRA_GENERATOR",
@@ -647,7 +647,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "E:/games101/work_0/Assignment_0/code"
+			"value" : "E:/games101/works_repo/games101_work/work_0/code"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -1127,7 +1127,7 @@
 				}
 			],
 			"type" : "BOOL",
-			"value" : "NO"
+			"value" : "OFF"
 		},
 		{
 			"name" : "CMAKE_SKIP_RPATH",
@@ -1143,7 +1143,7 @@
 				}
 			],
 			"type" : "BOOL",
-			"value" : "NO"
+			"value" : "OFF"
 		},
 		{
 			"name" : "CMAKE_STATIC_LINKER_FLAGS",
@@ -1255,7 +1255,7 @@
 				}
 			],
 			"type" : "BOOL",
-			"value" : "FALSE"
+			"value" : "OFF"
 		},
 		{
 			"name" : "Eigen3_DIR",
@@ -1279,7 +1279,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "E:/games101/work_0/Assignment_0/code/build"
+			"value" : "E:/games101/works_repo/games101_work/work_0/code/build"
 		},
 		{
 			"name" : "Transformation_IS_TOP_LEVEL",
@@ -1303,7 +1303,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "E:/games101/work_0/Assignment_0/code"
+			"value" : "E:/games101/works_repo/games101_work/work_0/code"
 		}
 	],
 	"kind" : "cache",

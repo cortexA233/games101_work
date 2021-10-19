@@ -53,10 +53,10 @@ RM = "C:\Program Files\CMake\bin\cmake.exe" -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = E:\games101\work_0\Assignment_0\code
+CMAKE_SOURCE_DIR = E:\games101\works_repo\games101_work\work_0\code
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = E:\games101\work_0\Assignment_0\code\build
+CMAKE_BINARY_DIR = E:\games101\works_repo\games101_work\work_0\code\build
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -80,14 +80,14 @@ clean: CMakeFiles/Transformation.dir/clean
 CMakeFiles/Transformation.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Transformation.dir\build.make CMakeFiles/Transformation.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Transformation.dir\build.make CMakeFiles/Transformation.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=E:\games101\work_0\Assignment_0\code\build\CMakeFiles --progress-num=1,2 "Built target Transformation"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=E:\games101\works_repo\games101_work\work_0\code\build\CMakeFiles --progress-num=1,2 "Built target Transformation"
 .PHONY : CMakeFiles/Transformation.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Transformation.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start E:\games101\work_0\Assignment_0\code\build\CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start E:\games101\works_repo\games101_work\work_0\code\build\CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/Transformation.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start E:\games101\work_0\Assignment_0\code\build\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start E:\games101\works_repo\games101_work\work_0\code\build\CMakeFiles 0
 .PHONY : CMakeFiles/Transformation.dir/rule
 
 # Convenience name for target.
