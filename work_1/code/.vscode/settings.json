@@ -1,0 +1,20 @@
+{
+    "files.associations": {
+        "cholesky": "cpp",
+        "core": "cpp",
+        "eigenvalues": "cpp",
+        "geometry": "cpp",
+        "householder": "cpp",
+        "iterativelinearsolvers": "cpp",
+        "jacobi": "cpp",
+        "lu": "cpp",
+        "orderingmethods": "cpp",
+        "qr": "cpp",
+        "svd": "cpp",
+        "sparse": "cpp",
+        "sparsecholesky": "cpp",
+        "sparsecore": "cpp",
+        "sparselu": "cpp",
+        "sparseqr": "cpp"
+    }
+}
