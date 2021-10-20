@@ -3,7 +3,7 @@
 #include <Eigen/Eigen>
 #include <iostream>
 #include <opencv2/opencv.hpp>
-
+// 作业1
 constexpr double MY_PI = 3.1415926;
 
 Eigen::Matrix4f get_view_matrix(Eigen::Vector3f eye_pos)
@@ -110,7 +110,7 @@ int main(int argc, const char** argv)
         r.draw(pos_id, ind_id, rst::Primitive::Triangle);
 
         cv::Mat image(700, 700, CV_32FC3, r.frame_buffer().data());
-        image.convertTo(image, CV_8UC3, 1.0f);
+        // image.convertTo(image, CV_8UC3, 1.0f);
         cv::imshow("image", image);
         key = cv::waitKey(10);
 

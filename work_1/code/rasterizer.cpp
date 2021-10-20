@@ -27,14 +27,13 @@ rst::ind_buf_id rst::rasterizer::load_indices(const std::vector<Eigen::Vector3i>
 
 // Bresenham's line drawing algorithm
 // Code taken from a stack overflow answer: https://stackoverflow.com/a/16405254
-void rst::rasterizer::draw_line(Eigen::Vector3f begin, Eigen::Vector3f end)
+void rst::rasterizer::draw_line(Eigen::Vector3f begin, Eigen::Vector3f end, Eigen::Vector3f line_color = {255, 0, 255})
 {
     auto x1 = begin.x();
     auto y1 = begin.y();
     auto x2 = end.x();
     auto y2 = end.y();
 
-    Eigen::Vector3f line_color = {255, 255, 255};
 
     int x,y,dx,dy,dx1,dy1,px,py,xe,ye,i;
 
@@ -173,7 +172,7 @@ void rst::rasterizer::draw(rst::pos_buf_id pos_buffer, rst::ind_buf_id ind_buffe
             t.setVertex(i, v[i].head<3>());
         }
 
-        t.setColor(0, 255.0,  0.0,  0.0);
+        t.setColor(0, 0.0,  0.0,  0.0);
         t.setColor(1, 0.0  ,255.0,  0.0);
         t.setColor(2, 0.0  ,  0.0,255.0);
 

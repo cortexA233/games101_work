@@ -1,5 +1,5 @@
 CMakeFiles/Rasterizer.dir/rasterizer.cpp.obj: \
- E:\games101\work_1\code\rasterizer.cpp \
+ E:\games101\works_repo\games101_work\work_1\code\rasterizer.cpp \
  E:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/algorithm \
  E:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/utility \
  E:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32/bits/c++config.h \
@@ -60,8 +60,8 @@ CMakeFiles/Rasterizer.dir/rasterizer.cpp.obj: \
  E:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/memoryfwd.h \
  E:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/uniform_int_dist.h \
  E:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/limits \
- E:\games101\work_1\code\rasterizer.hpp \
- E:\games101\work_1\code\Triangle.hpp \
+ E:\games101\works_repo\games101_work\work_1\code\rasterizer.hpp \
+ E:\games101\works_repo\games101_work\work_1\code\Triangle.hpp \
  C:/PROGRA~2/Eigen3/include/eigen3/Eigen/Eigen \
  C:/PROGRA~2/Eigen3/include/eigen3/Eigen/Dense \
  C:/PROGRA~2/Eigen3/include/eigen3/Eigen/Core \

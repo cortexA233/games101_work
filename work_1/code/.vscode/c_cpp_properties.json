@@ -5,13 +5,15 @@
             "includePath": [
                 "${default}",
                 "E:/opencv/build/x64/mingw/bin",
-                "E:/mingw64/bin"
+                "E:/opencv/build/x64/mingw/install/x64/mingw/bin",
+                "E:/mingw64/bin",
+                "C:/Program Files (x86)/Eigen3/include/eigen3"
             ],
             "windowsSdkVersion": "10.0.18362.0",
             "compilerPath": "E:/mingw64/bin/g++.exe",
             "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "windows-msvc-x64",
+            "intelliSenseMode": "windows-gcc-x64",
             "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],

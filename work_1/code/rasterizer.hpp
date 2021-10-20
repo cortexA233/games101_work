@@ -67,7 +67,7 @@ class rasterizer
     std::vector<Eigen::Vector3f>& frame_buffer() { return frame_buf; }
 
   private:
-    void draw_line(Eigen::Vector3f begin, Eigen::Vector3f end);
+    void draw_line(Eigen::Vector3f begin, Eigen::Vector3f end, Eigen::Vector3f line_color);
     void rasterize_wireframe(const Triangle& t);
 
   private:

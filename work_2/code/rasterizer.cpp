@@ -39,10 +39,23 @@ auto to_vec4(const Eigen::Vector3f& v3, float w = 1.0f)
     return Vector4f(v3.x(), v3.y(), v3.z(), w);
 }
 
+Vector3f cross_product(Vector3f a,Vector3f b){
+    float resx = a.y()*b.z()-a.z()*b.y(),
+        resy=a.z()*b.x()-a.x()*b.z(),
+        resz=a.x()*b.y()-a.y()*b.x();
+    Vector3f res = Vector3f(resx,resy,resz);
+    return res;
+}
 
 static bool insideTriangle(int x, int y, const Vector3f* _v)
 {   
     // TODO : Implement this function to check if the point (x, y) is inside the triangle represented by _v[0], _v[1], _v[2]
+    Vector3f ap = Vector3f(x-_v[0].x(), y-_v[0].y(),0),
+        bp = Vector3f(x-_v[1].x(), y-_v[1].y(),0),
+        cp = Vector3f(x-_v[2].x(), y-_v[2].y(),0);
+    Vector3f axb = cross_product(ap,bp);
+            ;
+    return false;
 }
 
 static std::tuple<float, float, float> computeBarycentric2D(float x, float y, const Vector3f* v)

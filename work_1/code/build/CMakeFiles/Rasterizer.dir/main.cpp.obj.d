@@ -1,5 +1,6 @@
-CMakeFiles/Rasterizer.dir/main.cpp.obj: E:\games101\work_1\code\main.cpp \
- E:\games101\work_1\code\Triangle.hpp \
+CMakeFiles/Rasterizer.dir/main.cpp.obj: \
+ E:\games101\works_repo\games101_work\work_1\code\main.cpp \
+ E:\games101\works_repo\games101_work\work_1\code\Triangle.hpp \
  C:/PROGRA~2/Eigen3/include/eigen3/Eigen/Eigen \
  C:/PROGRA~2/Eigen3/include/eigen3/Eigen/Dense \
  C:/PROGRA~2/Eigen3/include/eigen3/Eigen/Core \
@@ -463,7 +464,7 @@ CMakeFiles/Rasterizer.dir/main.cpp.obj: E:\games101\work_1\code\main.cpp \
  E:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_list.h \
  E:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/allocated_ptr.h \
  E:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/list.tcc \
- E:\games101\work_1\code\rasterizer.hpp \
+ E:\games101\works_repo\games101_work\work_1\code\rasterizer.hpp \
  E:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/iostream \
  E:/opencv/sources/include/opencv2/opencv.hpp \
  E:/opencv/build/x64/mingw/opencv2/opencv_modules.hpp \
