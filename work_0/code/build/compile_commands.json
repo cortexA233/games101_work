@@ -1,7 +1,0 @@
-[
-{
-  "directory": "E:/games101/works_repo/games101_work/work_0/code/build",
-  "command": "E:\\mingw64\\bin\\x86_64-w64-mingw32-g++.exe  @CMakeFiles/Transformation.dir/includes_CXX.rsp -g -o CMakeFiles\\Transformation.dir\\main.cpp.obj -c E:\\games101\\works_repo\\games101_work\\work_0\\code\\main.cpp",
-  "file": "E:/games101/works_repo/games101_work/work_0/code/main.cpp"
-}
-]

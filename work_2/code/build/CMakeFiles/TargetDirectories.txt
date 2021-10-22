@@ -1,3 +1,0 @@
-E:/games101/works_repo/games101_work/work_2/code/build/CMakeFiles/edit_cache.dir
-E:/games101/works_repo/games101_work/work_2/code/build/CMakeFiles/Rasterizer.dir
-E:/games101/works_repo/games101_work/work_2/code/build/CMakeFiles/rebuild_cache.dir
