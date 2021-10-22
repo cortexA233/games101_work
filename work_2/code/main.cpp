@@ -31,7 +31,7 @@ Eigen::Matrix4f get_model_matrix(float rotation_angle)
         sin(rotation_angle), cos(rotation_angle), 0, 0,
         0, 0, 1, 0,
         0, 0, 0, 1;
-
+    
     return rotateZ*model;
     // return model;
 }
@@ -39,8 +39,11 @@ Eigen::Matrix4f get_model_matrix(float rotation_angle)
 Eigen::Matrix4f get_projection_matrix(float eye_fov, float aspect_ratio, float zNear, float zFar)
 {
     // TODO: Copy-paste your implementation from the previous assignment.
-    Eigen::Matrix4f projection;
+    Eigen::Matrix4f projection = Eigen::Matrix4f::Identity();
 
+    // TODO: Implement this function
+    // Create the projection matrix for the given parameters.
+    // Then return it.
     Eigen::Matrix4f frus;
     frus << (1.0 / tan(eye_fov / 2)) / aspect_ratio, 0, 0, 0,
         0, 1 / tan(eye_fov / 2), 0, 0,
@@ -49,20 +52,8 @@ Eigen::Matrix4f get_projection_matrix(float eye_fov, float aspect_ratio, float z
     return frus*projection;
 }
 
-Vector3f cross_product(Vector3f a,Vector3f b){
-    float resx = a.y()*b.z()-a.z()*b.y(),
-        resy=a.z()*b.x()-a.x()*b.z(),
-        resz=a.x()*b.y()-a.y()*b.x();
-    Vector3f res = Vector3f(resx,resy,resz);
-    return res;
-}
-
 int main(int argc, const char** argv)
-{
-    Eigen::Vector3f ab = Vector3f(1,0,0), bc=Vector3f(0,1,0);
-    std::cout<<cross_product(ab,bc);
-    
-
+{   
     float angle = 0;
     bool command_line = false;
     std::string filename = "output.png";

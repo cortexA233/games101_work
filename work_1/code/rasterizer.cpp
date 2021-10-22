@@ -144,7 +144,8 @@ void rst::rasterizer::draw(rst::pos_buf_id pos_buffer, rst::ind_buf_id ind_buffe
     float f2 = (100 + 0.1) / 2.0;
 
     Eigen::Matrix4f mvp = projection * view * model;
-    for (auto& i : ind)
+    std::cout << mvp << std::endl;
+    for (auto &i : ind)
     {
         Triangle t;
 

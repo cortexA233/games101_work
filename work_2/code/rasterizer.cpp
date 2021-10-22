@@ -53,9 +53,12 @@ static bool insideTriangle(int x, int y, const Vector3f* _v)
     Vector3f ap = Vector3f(x-_v[0].x(), y-_v[0].y(),0),
         bp = Vector3f(x-_v[1].x(), y-_v[1].y(),0),
         cp = Vector3f(x-_v[2].x(), y-_v[2].y(),0);
-    Vector3f axb = cross_product(ap,bp);
-            ;
-    return false;
+    Vector3f axb = cross_product(ap, bp),
+            bxc = cross_product(bp, cp),
+            cxa = cross_product(cp, ap);
+    return true;
+    return (axb.z()>0 && bxc.z()>0 && cxa.z()>0)
+        || (axb.z()<0 && bxc.z()<0 && cxa.z()<0);
 }
 
 static std::tuple<float, float, float> computeBarycentric2D(float x, float y, const Vector3f* v)
@@ -76,6 +79,7 @@ void rst::rasterizer::draw(pos_buf_id pos_buffer, ind_buf_id ind_buffer, col_buf
     float f2 = (50 + 0.1) / 2.0;
 
     Eigen::Matrix4f mvp = projection * view * model;
+    std::cout<<mvp<<std::endl;
     for (auto& i : ind)
     {
         Triangle t;
@@ -118,6 +122,23 @@ void rst::rasterizer::draw(pos_buf_id pos_buffer, ind_buf_id ind_buffer, col_buf
 //Screen space rasterization
 void rst::rasterizer::rasterize_triangle(const Triangle& t) {
     auto v = t.toVector4();
+    int x_min = std::min(v[0].x(), std::min(v[1].x(),v[2].x())),
+        x_max = std::max(v[0].x(), std::max(v[1].x(),v[2].x())),
+        y_min = std::min(v[0].y(), std::min(v[1].y(),v[2].y())),
+        y_max = std::max(v[0].y(), std::max(v[1].y(),v[2].y()));
+    // std::cout<<x_min<<" "<<x_max<<" "<<y_min<<" "<<y_max<<std::endl;
+    std::cout<<v[0].x()<<" "<<v[1].x()<<" "<<v[2].x()<<std::endl;
+    for(int i=x_min;i<=x_max;++i){
+        for(int o=y_min;o<y_max;++o){
+            if(insideTriangle(i, o, t.v)==true){
+                auto[alpha, beta, gamma] = computeBarycentric2D(i, o, t.v);
+                float w_reciprocal = 1.0/(alpha / v[0].w() + beta / v[1].w() + gamma / v[2].w());
+                float z_interpolated = alpha * v[0].z() / v[0].w() + beta * v[1].z() / v[1].w() + gamma * v[2].z() / v[2].w();
+                z_interpolated *= w_reciprocal;
+                set_pixel(Vector3f(i,o,1),t.getColor());
+            }
+        }
+    }
     
     // TODO : Find out the bounding box of current triangle.
     // iterate through the pixel and find if the current pixel is inside the triangle
