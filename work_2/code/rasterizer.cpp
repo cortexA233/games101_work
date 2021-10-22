@@ -47,7 +47,7 @@ Vector3f cross_product(Vector3f a,Vector3f b){
     return res;
 }
 
-static bool insideTriangle(int x, int y, const Vector3f* _v)
+static bool insideTriangle(float x, float y, const Vector3f* _v)
 {   
     // TODO : Implement this function to check if the point (x, y) is inside the triangle represented by _v[0], _v[1], _v[2]
     Vector3f ap = Vector3f(x-_v[0].x(), y-_v[0].y(),0),
@@ -56,7 +56,7 @@ static bool insideTriangle(int x, int y, const Vector3f* _v)
     Vector3f axb = cross_product(ap, bp),
             bxc = cross_product(bp, cp),
             cxa = cross_product(cp, ap);
-    return true;
+            
     return (axb.z()>0 && bxc.z()>0 && cxa.z()>0)
         || (axb.z()<0 && bxc.z()<0 && cxa.z()<0);
 }
@@ -79,7 +79,7 @@ void rst::rasterizer::draw(pos_buf_id pos_buffer, ind_buf_id ind_buffer, col_buf
     float f2 = (50 + 0.1) / 2.0;
 
     Eigen::Matrix4f mvp = projection * view * model;
-    std::cout<<mvp<<std::endl;
+    // std::cout<<mvp<<std::endl;
     for (auto& i : ind)
     {
         Triangle t;
@@ -120,25 +120,71 @@ void rst::rasterizer::draw(pos_buf_id pos_buffer, ind_buf_id ind_buffer, col_buf
 }
 
 //Screen space rasterization
-void rst::rasterizer::rasterize_triangle(const Triangle& t) {
+void rst::rasterizer::rasterize_triangle(const Triangle& t, bool MSAA = false) {
     auto v = t.toVector4();
     int x_min = std::min(v[0].x(), std::min(v[1].x(),v[2].x())),
         x_max = std::max(v[0].x(), std::max(v[1].x(),v[2].x())),
         y_min = std::min(v[0].y(), std::min(v[1].y(),v[2].y())),
         y_max = std::max(v[0].y(), std::max(v[1].y(),v[2].y()));
     // std::cout<<x_min<<" "<<x_max<<" "<<y_min<<" "<<y_max<<std::endl;
-    std::cout<<v[0].x()<<" "<<v[1].x()<<" "<<v[2].x()<<std::endl;
+    // float zbuffer[1000][1000];
+    // std::cout<<v[0].x()<<" "<<v[1].x()<<" "<<v[2].x()<<std::endl;
+    if(!MSAA){          //不启用MSAA
+        for(int i=x_min;i<=x_max;++i){
+            for(int o=y_min;o<y_max;++o){
+                if(insideTriangle(i, o, t.v)==true){
+                    auto[alpha, beta, gamma] = computeBarycentric2D(i, o, t.v);
+                    float w_reciprocal = 1.0/(alpha / v[0].w() + beta / v[1].w() + gamma / v[2].w());
+                    float z_interpolated = alpha * v[0].z() / v[0].w() + beta * v[1].z() / v[1].w() + gamma * v[2].z() / v[2].w();
+                    z_interpolated *= w_reciprocal;
+                    if(depth_buf[get_index(i, o)] > z_interpolated){
+                        set_pixel(Vector3f(i,o,1),t.getColor());
+                        depth_buf[get_index(i, o)] = z_interpolated;
+                    }
+                }
+            }
+        }
+        return;
+    }
+    // 启用MSAA
     for(int i=x_min;i<=x_max;++i){
         for(int o=y_min;o<y_max;++o){
-            if(insideTriangle(i, o, t.v)==true){
+            Vector2f samp_1 = Vector2f(i+0.25,o+0.25),
+                samp_2 = Vector2f(i+0.25,o+0.75),
+                samp_3 = Vector2f(i+0.75,o+0.25),
+                samp_4 = Vector2f(i+0.75,o+0.75);
+
+            // std::cout<<samp_1.x()<<" "<<samp_1.y()<<std::endl;
+            // std::cout<<samp_2.x()<<" "<<samp_2.y()<<std::endl;
+            // std::cout<<samp_3.x()<<" "<<samp_3.y()<<std::endl;
+            // std::cout<<samp_4.x()<<" "<<samp_4.y()<<std::endl;
+            // std::cout<<"!"<<std::endl;
+
+            float color_depth = (insideTriangle(samp_1.x(), samp_1.y(), t.v) ? 0.25 : 0) +
+                (insideTriangle(samp_2.x(), samp_2.y(), t.v) ? 0.25 : 0) +
+                (insideTriangle(samp_3.x(), samp_3.y(), t.v) ? 0.25 : 0) +
+                (insideTriangle(samp_4.x(), samp_4.y(), t.v) ? 0.25 : 0);
+            // std::cout<<(insideTriangle(samp_1.x(), samp_1.y(), t.v) ? 0.25 : 0)<<
+            //     (insideTriangle(samp_2.x(), samp_2.y(), t.v) ? 0.25 : 0)<<
+            //     (insideTriangle(samp_3.x(), samp_3.y(), t.v) ? 0.25 : 0)<<
+            //     (insideTriangle(samp_4.x(), samp_4.y(), t.v) ? 0.25 : 0)<<std::endl;
+            // if(color_depth>=1){
+            //     std::cout<<"!\n";
+            // }
+            if(color_depth > 0){
                 auto[alpha, beta, gamma] = computeBarycentric2D(i, o, t.v);
                 float w_reciprocal = 1.0/(alpha / v[0].w() + beta / v[1].w() + gamma / v[2].w());
                 float z_interpolated = alpha * v[0].z() / v[0].w() + beta * v[1].z() / v[1].w() + gamma * v[2].z() / v[2].w();
                 z_interpolated *= w_reciprocal;
-                set_pixel(Vector3f(i,o,1),t.getColor());
+                if(depth_buf[get_index(i, o)] > z_interpolated){
+                    set_pixel(Vector3f(i,o,1),t.getColor()*color_depth);
+                    depth_buf[get_index(i, o)] = z_interpolated;
+                }
             }
         }
     }
+
+    
     
     // TODO : Find out the bounding box of current triangle.
     // iterate through the pixel and find if the current pixel is inside the triangle
