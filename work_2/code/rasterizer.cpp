@@ -120,7 +120,7 @@ void rst::rasterizer::draw(pos_buf_id pos_buffer, ind_buf_id ind_buffer, col_buf
 }
 
 //Screen space rasterization
-void rst::rasterizer::rasterize_triangle(const Triangle& t, bool MSAA = false) {
+void rst::rasterizer::rasterize_triangle(const Triangle& t) {
     auto v = t.toVector4();
     int x_min = std::min(v[0].x(), std::min(v[1].x(),v[2].x())),
         x_max = std::max(v[0].x(), std::max(v[1].x(),v[2].x())),
@@ -129,6 +129,7 @@ void rst::rasterizer::rasterize_triangle(const Triangle& t, bool MSAA = false) {
     // std::cout<<x_min<<" "<<x_max<<" "<<y_min<<" "<<y_max<<std::endl;
     // float zbuffer[1000][1000];
     // std::cout<<v[0].x()<<" "<<v[1].x()<<" "<<v[2].x()<<std::endl;
+    bool MSAA = true;
     if(!MSAA){          //不启用MSAA
         for(int i=x_min;i<=x_max;++i){
             for(int o=y_min;o<y_max;++o){
