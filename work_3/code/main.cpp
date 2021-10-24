@@ -50,7 +50,17 @@ Eigen::Matrix4f get_model_matrix(float angle)
 Eigen::Matrix4f get_projection_matrix(float eye_fov, float aspect_ratio, float zNear, float zFar)
 {
     // TODO: Use the same projection matrix from the previous assignments
+    Eigen::Matrix4f projection = Eigen::Matrix4f::Identity();
 
+    // TODO: Implement this function
+    // Create the projection matrix for the given parameters.
+    // Then return it.
+    Eigen::Matrix4f frus;
+    frus << (1.0 / tan(eye_fov / 2)) / aspect_ratio, 0, 0, 0,
+        0, 1 / tan(eye_fov / 2), 0, 0,
+        0, 0, -(zFar + zNear) / (zFar - zNear), -(2 * zNear * zFar) / (zFar - zNear),
+        0, 0, -1, 0;
+    return frus*projection;
 }
 
 Eigen::Vector3f vertex_shader(const vertex_shader_payload& payload)

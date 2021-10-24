@@ -279,7 +279,47 @@ void rst::rasterizer::rasterize_triangle(const Triangle& t, const std::array<Eig
     // Use: payload.view_pos = interpolated_shadingcoords;
     // Use: Instead of passing the triangle's color directly to the frame buffer, pass the color to the shaders first to get the final color;
     // Use: auto pixel_color = fragment_shader(payload);
+    auto v = t.toVector4();
+    int x_min = std::min(v[0].x(), std::min(v[1].x(),v[2].x())),
+        x_max = std::max(v[0].x(), std::max(v[1].x(),v[2].x())),
+        y_min = std::min(v[0].y(), std::min(v[1].y(),v[2].y())),
+        y_max = std::max(v[0].y(), std::max(v[1].y(),v[2].y()));
+    for(int i=x_min;i<=x_max;++i){
+        for(int o=y_min;o<y_max;++o){
+            Vector2f samp_1 = Vector2f(i+0.25,o+0.25),
+                samp_2 = Vector2f(i+0.25,o+0.75),
+                samp_3 = Vector2f(i+0.75,o+0.25),
+                samp_4 = Vector2f(i+0.75,o+0.75);
 
+            // std::cout<<samp_1.x()<<" "<<samp_1.y()<<std::endl;
+            // std::cout<<samp_2.x()<<" "<<samp_2.y()<<std::endl;
+            // std::cout<<samp_3.x()<<" "<<samp_3.y()<<std::endl;
+            // std::cout<<samp_4.x()<<" "<<samp_4.y()<<std::endl;
+            // std::cout<<"!"<<std::endl;
+
+            float color_depth = (insideTriangle(samp_1.x(), samp_1.y(), t.v) ? 0.25 : 0) +
+                (insideTriangle(samp_2.x(), samp_2.y(), t.v) ? 0.25 : 0) +
+                (insideTriangle(samp_3.x(), samp_3.y(), t.v) ? 0.25 : 0) +
+                (insideTriangle(samp_4.x(), samp_4.y(), t.v) ? 0.25 : 0);
+            // std::cout<<(insideTriangle(samp_1.x(), samp_1.y(), t.v) ? 0.25 : 0)<<
+            //     (insideTriangle(samp_2.x(), samp_2.y(), t.v) ? 0.25 : 0)<<
+            //     (insideTriangle(samp_3.x(), samp_3.y(), t.v) ? 0.25 : 0)<<
+            //     (insideTriangle(samp_4.x(), samp_4.y(), t.v) ? 0.25 : 0)<<std::endl;
+            // if(color_depth>=1){
+            //     std::cout<<"!\n";
+            // }
+            if(color_depth > 0){
+                auto[alpha, beta, gamma] = computeBarycentric2D(i, o, t.v);
+                float w_reciprocal = 1.0/(alpha / v[0].w() + beta / v[1].w() + gamma / v[2].w());
+                float z_interpolated = alpha * v[0].z() / v[0].w() + beta * v[1].z() / v[1].w() + gamma * v[2].z() / v[2].w();
+                z_interpolated *= w_reciprocal;
+                if(depth_buf[get_index(i, o)] > z_interpolated){
+                    set_pixel(Vector3f(i,o,1),t.getColor()*color_depth);
+                    depth_buf[get_index(i, o)] = z_interpolated;
+                }
+            }
+        }
+    }
  
 }
 
