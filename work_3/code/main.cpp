@@ -150,12 +150,19 @@ Eigen::Vector3f phong_fragment_shader(const fragment_shader_payload& payload)
     Eigen::Vector3f result_color = {0, 0, 0};
     for (auto& light : lights)
     {
+        Vector3f viewDir = point - eye_pos;
+        viewDir = -viewDir.normalized();
+        Vector3f lightDir = point - light.position;
+        lightDir = -lightDir.normalized();
+        Vector3f halfDir = viewDir + lightDir;
+        result_color += ks*std::max(halfDir.dot(normal), 0.0f);
+
         // TODO: For each light source in the code, calculate what the *ambient*, *diffuse*, and *specular* 
         // components are. Then, accumulate that result on the *result_color* object.
         
     }
 
-    return result_color * 255.f;
+    return result_color;
 }
 
 
@@ -194,7 +201,7 @@ Eigen::Vector3f displacement_fragment_shader(const fragment_shader_payload& payl
     // Normal n = normalize(TBN * ln)
 
 
-    Eigen::Vector3f result_color = {0, 0, 0};
+    Eigen::Vector3f result_color = {1, 1, 1};
 
     for (auto& light : lights)
     {
@@ -261,6 +268,7 @@ int main(int argc, const char** argv)
 
     // Load .obj File
     bool loadout = Loader.LoadFile("../models/spot/spot_triangulated_good.obj");
+    std::cout << loadout << std::endl;
     for(auto mesh:Loader.LoadedMeshes)
     {
         for(int i=0;i<mesh.Vertices.size();i+=3)
@@ -344,6 +352,7 @@ int main(int argc, const char** argv)
 
     while(key != 27)
     {
+        std::cout << angle << std::endl;
         r.clear(rst::Buffers::Color | rst::Buffers::Depth);
 
         r.set_model(get_model_matrix(angle));
