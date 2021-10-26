@@ -150,15 +150,17 @@ Eigen::Vector3f phong_fragment_shader(const fragment_shader_payload& payload)
     Eigen::Vector3f result_color = {0, 0, 0};
     for (auto& light : lights)
     {
-        Vector3f viewDir = point - eye_pos;
-        viewDir = -viewDir.normalized();
-        Vector3f lightDir = point - light.position;
-        lightDir = -lightDir.normalized();
-        Vector3f halfDir = viewDir + lightDir;
-        result_color += ks*std::max(halfDir.dot(normal), 0.0f);
+        Vector3f viewDir = eye_pos - point;
+        viewDir = viewDir.normalized();
+        Vector3f lightDir = light.position - point;
+        lightDir = lightDir.normalized();
+        Vector3f halfDir = (viewDir + lightDir).normalized();
 
-        // TODO: For each light source in the code, calculate what the *ambient*, *diffuse*, and *specular* 
-        // components are. Then, accumulate that result on the *result_color* object.
+        result_color += ks.cwiseProduct(light.intensity * std::max(pow(halfDir.dot(normal), p), 0.0f));
+
+        result_color += kd.cwiseProduct(light.intensity * std::max(0.0f, normal.dot(lightDir)));
+
+        result_color += ka.cwiseProduct(amb_light_intensity);
         
     }
 
@@ -257,6 +259,7 @@ Eigen::Vector3f bump_fragment_shader(const fragment_shader_payload& payload)
 
 int main(int argc, const char** argv)
 {
+    std::ios::sync_with_stdio(false);
     std::vector<Triangle*> TriangleList;
 
     float angle = 140.0;
@@ -268,7 +271,6 @@ int main(int argc, const char** argv)
 
     // Load .obj File
     bool loadout = Loader.LoadFile("../models/spot/spot_triangulated_good.obj");
-    std::cout << loadout << std::endl;
     for(auto mesh:Loader.LoadedMeshes)
     {
         for(int i=0;i<mesh.Vertices.size();i+=3)
@@ -371,11 +373,11 @@ int main(int argc, const char** argv)
 
         if (key == 'a' )
         {
-            angle -= 0.1;
+            angle -= 3;
         }
         else if (key == 'd')
         {
-            angle += 0.1;
+            angle += 3;
         }
 
     }
