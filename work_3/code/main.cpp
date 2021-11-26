@@ -122,7 +122,17 @@ Eigen::Vector3f texture_fragment_shader(const fragment_shader_payload& payload)
     {
         // TODO: For each light source in the code, calculate what the *ambient*, *diffuse*, and *specular* 
         // components are. Then, accumulate that result on the *result_color* object.
+        Vector3f viewDir = eye_pos - point;
+        viewDir = viewDir.normalized();
+        Vector3f lightDir = light.position - point;
+        lightDir = lightDir.normalized();
+        Vector3f halfDir = (viewDir + lightDir).normalized();
 
+        result_color += ks.cwiseProduct(light.intensity * std::max(pow(halfDir.dot(normal), p), 0.0f));
+
+        result_color += kd.cwiseProduct(light.intensity * std::max(0.0f, normal.dot(lightDir)));
+
+        result_color += ka.cwiseProduct(amb_light_intensity);
     }
 
     return result_color * 255.f;
@@ -156,11 +166,11 @@ Eigen::Vector3f phong_fragment_shader(const fragment_shader_payload& payload)
         lightDir = lightDir.normalized();
         Vector3f halfDir = (viewDir + lightDir).normalized();
 
-        result_color += ks.cwiseProduct(light.intensity * std::max(pow(halfDir.dot(normal), p), 0.0f));
+        // result_color += ks.cwiseProduct(light.intensity * std::max(pow(halfDir.dot(normal), p), 0.0f));
 
-        result_color += kd.cwiseProduct(light.intensity * std::max(0.0f, normal.dot(lightDir)));
+        // result_color += kd.cwiseProduct(light.intensity * std::max(0.0f, normal.dot(lightDir)));
 
-        result_color += ka.cwiseProduct(amb_light_intensity);
+        // result_color += ka.cwiseProduct(amb_light_intensity);
         
     }
 
