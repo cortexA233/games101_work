@@ -166,11 +166,11 @@ Eigen::Vector3f phong_fragment_shader(const fragment_shader_payload& payload)
         lightDir = lightDir.normalized();
         Vector3f halfDir = (viewDir + lightDir).normalized();
 
-        // result_color += ks.cwiseProduct(light.intensity * std::max(pow(halfDir.dot(normal), p), 0.0f));
+        result_color += ks.cwiseProduct(light.intensity * std::max(pow(halfDir.dot(normal), p), 0.0f));
 
-        // result_color += kd.cwiseProduct(light.intensity * std::max(0.0f, normal.dot(lightDir)));
+        result_color += kd.cwiseProduct(light.intensity * std::max(0.0f, normal.dot(lightDir)));
 
-        // result_color += ka.cwiseProduct(amb_light_intensity);
+        result_color += ka.cwiseProduct(amb_light_intensity);
         
     }
 
